@@ -6,12 +6,7 @@ import logging
 import time
 from splinter.browser import Browser
 
-# Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
-
-logger = logging.getLogger(__name__)
-bot_token = "935797879:AAGCXLqMikLffz-eGedZB0th7waxpOVCS58"
+bot_token = ""
 
 print("start")
 
@@ -28,32 +23,20 @@ def search_video(word):
     html = urllib.request.urlopen("https://www.youtube.com/results?search_query="+sentences)
     video_ids = re.findall(r"watch\?v=(\S{11})",html.read().decode())
     video ="https://www.youtube.com/watch?v="+video_ids[0]
-    #new version
-    '''
-    executable_path = {'executable_path':'.\chromedriver.exe'}
-    browser = Browser('chrome', **executable_path)
-    browser.visit(video)
-    print(browser.title)
-    time.sleep(2)
-    element = browser.find_by_css('.ytp-play-button')
-    element.click()
-    time.sleep(2)
-    window = browser.windows[0]
-    '''
     # old version
     firefox_path = r"C:\Program Files\Mozilla Firefox\firefox.exe"
     webbrowser.register('firefox',None,webbrowser.BackgroundBrowser(firefox_path))
     webbrowser.get('firefox').open(video)
-
+# thi method kill the browser task.
 def close_tab():
-    # old version 
     subprocess.run('taskkill /F /FI "imagename eq firefox.exe"',shell=True)
     #new version
     #window.close()
+    # the method search on the url insert in the chat.
 def open_Film(url):
     webbrowser.open(url=url)
 
-
+# the method turn off pc.
 def shutdownCMD():
     subprocess.run("shutdown -s -t 005",shell=True)
 
@@ -70,7 +53,7 @@ def shutdown(update, context):
         "your server is shutdown"
     )
 
-
+# /start command allow to u to see all command.
 def start(update, context):
     update.message.reply_text(
         f"ciao{update.message.from_user.first_name},\nI comandi sono:\n\n/start per visualizzare tutti i comandi disponibili,\n"
@@ -83,7 +66,7 @@ def start(update, context):
     
 def musicApp(update,context):
     update.message.reply_text(
-        "da qui in poi ogni tua parola sar‡ il titolo di una canzone\n"
+        "da qui in poi ogni tua parola sar√† il titolo di una canzone\n"
         +"scegli con cura le tue parole "
     )
     return MUSIC
